@@ -38,7 +38,7 @@ export default class ShareExample extends Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Button title="hhhhh" onPress={this.onShare}>
+        <Button title="Share" onPress={this.onShare}>
           Share
         </Button>
       </View>
