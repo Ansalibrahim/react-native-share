@@ -10,7 +10,7 @@
 
 "use strict";
 
-import { NativeModules, Platform, processColor, invariant } from "react-native";
+import { NativeModules, Platform, processColor } from "react-native";
 
 const { ActionSheetManager, ShareModule } = NativeModules;
 
@@ -59,24 +59,24 @@ class Share {
    *
    */
   static share(content: Content, options: Options = {}): Promise<Object> {
-    invariant(
-      typeof content === "object" && content !== null,
-      "Content to share must be a valid object"
-    );
-    invariant(
-      typeof content.url === "string" || typeof content.message === "string",
-      "At least one of URL and message is required"
-    );
-    invariant(
-      typeof options === "object" && options !== null,
-      "Options must be a valid object"
-    );
+    // invariant(
+    //   typeof content === "object" && content !== null,
+    //   "Content to share must be a valid object"
+    // );
+    // invariant(
+    //   typeof content.url === "string" || typeof content.message === "string",
+    //   "At least one of URL and message is required"
+    // );
+    // invariant(
+    //   typeof options === "object" && options !== null,
+    //   "Options must be a valid object"
+    // );
 
     if (Platform.OS === "android") {
-      invariant(
-        !content.title || typeof content.title === "string",
-        "Invalid title: title should be a string."
-      );
+      // invariant(
+      //   !content.title || typeof content.title === "string",
+      //   "Invalid title: title should be a string."
+      // );
       return ShareModule.share(content, options.dialogTitle);
     } else if (Platform.OS === "ios") {
       return new Promise((resolve, reject) => {

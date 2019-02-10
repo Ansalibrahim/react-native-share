@@ -8,17 +8,17 @@
  */
 import React, { Component } from "react";
 import { View, Button } from "react-native";
-import Share from "react-native-share";
+import ShareCustom from "react-native-share";
 
 export default class ShareExample extends Component {
   onShare = async () => {
     try {
-      const result = await Share.share({
+      const result = await ShareCustom.share({
         message:
-          "React Native | A framework for building native apps using React"
+          "test   React Native | A framework for building native apps using React"
       });
 
-      if (result.action === Share.sharedAction) {
+      if (result.action === ShareCustom.sharedAction) {
         if (result.activityType) {
           // shared with activity type of result.activityType
           console.log("result", result);
@@ -26,7 +26,7 @@ export default class ShareExample extends Component {
           // shared
           console.log("result", result);
         }
-      } else if (result.action === Share.dismissedAction) {
+      } else if (result.action === ShareCustom.dismissedAction) {
         // dismissed
         console.log("dismissed");
       }
