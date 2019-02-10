@@ -8,28 +8,20 @@
  * @flow
  */
 
-'use strict';
+"use strict";
 
-import {
-    NativeModules,
-    Platform,
-    processColor,
-    invariant,
-} from 'react-native';
+import { NativeModules, Platform, processColor, invariant } from "react-native";
 
-const {
-    ActionSheetManager,
-    ShareModule
-} = NativeModules;
+const { ActionSheetManager, ShareModule } = NativeModules;
 
 type Content =
-  | {title?: string, message: string}
-  | {title?: string, url: string};
+  | { title?: string, message: string }
+  | { title?: string, url: string };
 type Options = {
   dialogTitle?: string,
   excludedActivityTypes?: Array<string>,
   tintColor?: string,
-  subject?: string,
+  subject?: string
 };
 
 class Share {
@@ -66,47 +58,51 @@ class Share {
    *  - `dialogTitle`
    *
    */
-  static RNShare(content: Content, options: Options = {}): Promise<Object> {
+  static share(content: Content, options: Options = {}): Promise<Object> {
     invariant(
-      typeof content === 'object' && content !== null,
-      'Content to share must be a valid object',
+      typeof content === "object" && content !== null,
+      "Content to share must be a valid object"
     );
     invariant(
-      typeof content.url === 'string' || typeof content.message === 'string',
-      'At least one of URL and message is required',
+      typeof content.url === "string" || typeof content.message === "string",
+      "At least one of URL and message is required"
     );
     invariant(
-      typeof options === 'object' && options !== null,
-      'Options must be a valid object',
+      typeof options === "object" && options !== null,
+      "Options must be a valid object"
     );
 
-    if (Platform.OS === 'android') {
+    if (Platform.OS === "android") {
       invariant(
-        !content.title || typeof content.title === 'string',
-        'Invalid title: title should be a string.',
+        !content.title || typeof content.title === "string",
+        "Invalid title: title should be a string."
       );
       return ShareModule.share(content, options.dialogTitle);
-    } else if (Platform.OS === 'ios') {
+    } else if (Platform.OS === "ios") {
       return new Promise((resolve, reject) => {
         ActionSheetManager.showShareActionSheetWithOptions(
-          {...content, ...options, tintColor: processColor(options.tintColor)},
+          {
+            ...content,
+            ...options,
+            tintColor: processColor(options.tintColor)
+          },
           error => reject(error),
           (success, activityType) => {
             if (success) {
               resolve({
-                action: 'sharedAction',
-                activityType: activityType,
+                action: "sharedAction",
+                activityType: activityType
               });
             } else {
               resolve({
-                action: 'dismissedAction',
+                action: "dismissedAction"
               });
             }
-          },
+          }
         );
       });
     } else {
-      return Promise.reject(new Error('Unsupported platform'));
+      return Promise.reject(new Error("Unsupported platform"));
     }
   }
 
@@ -114,7 +110,7 @@ class Share {
    * The content was successfully shared.
    */
   static get sharedAction(): string {
-    return 'sharedAction';
+    return "sharedAction";
   }
 
   /**
@@ -122,7 +118,7 @@ class Share {
    * @platform ios
    */
   static get dismissedAction(): string {
-    return 'dismissedAction';
+    return "dismissedAction";
   }
 }
 

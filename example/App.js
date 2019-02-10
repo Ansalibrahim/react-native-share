@@ -8,7 +8,7 @@
  */
 import React, { Component } from "react";
 import { View, Button } from "react-native";
-import { Share } from "react-native-share";
+import Share from "react-native-share";
 
 export default class ShareExample extends Component {
   onShare = async () => {
